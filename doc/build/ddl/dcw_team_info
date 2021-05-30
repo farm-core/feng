@@ -1,0 +1,25 @@
+-- 数据中心前台 团队信息表
+
+DROP TABLE IF EXISTS dcw_team_info;
+CREATE TABLE dcw_team_info
+(
+    id                      SERIAL PRIMARY KEY,
+    team_name              VARCHAR(100) NOT NULL,
+    description                  VARCHAR(500),
+    department_id                  INT,
+    created_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    created_by              VARCHAR(100) NOT NULL,
+    updated_by              VARCHAR(100) NOT NULL
+);
+CREATE UNIQUE INDEX ux_dcw_team_info
+    ON dcw_team_info (id);
+COMMENT ON TABLE dcw_team_info IS '团队信息表';
+COMMENT ON COLUMN dcw_team_info.id IS '主键id';
+COMMENT ON COLUMN dcw_team_info.team_name IS '团队名称';
+COMMENT ON COLUMN dcw_team_info.description IS '团队描述';
+COMMENT ON COLUMN dcw_team_info.department_id IS '所属部门ID';
+COMMENT ON COLUMN dcw_team_info.created_time IS '创建时间';
+COMMENT ON COLUMN dcw_team_info.updated_time IS '更新时间';
+COMMENT ON COLUMN dcw_team_info.created_by IS '创建人';
+COMMENT ON COLUMN dcw_team_info.updated_by IS '更新人';

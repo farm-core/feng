@@ -1,0 +1,155 @@
+
+PUT _template/zipkin:setting_default
+{
+  "order" : 10,
+    "index_patterns" : [
+      "zipkin:span-*"
+    ],
+    "settings" : {
+      "index" : {
+        "mapper" : {
+          "dynamic" : "false"
+        },
+        "requests" : {
+          "cache" : {
+            "enable" : "true"
+          }
+        },
+        "number_of_shards" : "1",
+        "number_of_replicas" : "1"
+      }
+    }
+}
+
+GET _template/zipkin:setting_default
+
+PUT _template/logstash:setting_default
+{
+  "order" : 10,
+    "index_patterns" : [
+      "logstash-*"
+    ],
+    "settings" : {
+      "index" : {
+        "mapper" : {
+          "dynamic" : "false"
+        },
+        "requests" : {
+          "cache" : {
+            "enable" : "true"
+          }
+        },
+        "number_of_shards" : "1",
+        "number_of_replicas" : "1"
+      }
+    }
+}
+
+
+GET _ingest/pipeline/zipkin-record-convert
+
+PUT _ingest/pipeline/zipkin-record-convert
+{
+   "description" : "tags record pipeline convert",
+    "processors" : [
+      {
+        "convert" : {
+          "field" : "tags.record",
+          "target_field" : "record",
+          "type" : "long",
+          "ignore_missing" : true
+        }
+      },
+      {
+        "set" : {
+          "field" : "user",
+          "value" : "{{tags.user}}"
+        }
+      }
+    ]
+}
+
+GET _ingest/pipeline
+GET _cat/templates
+GET _template/logstash-index-template
+GET _template/logstash:setting_default
+GET _template/logstash
+GET _template/zipkin:span_template
+GET _template/zipkin:setting_default
+PUT _snapshot/backup
+{
+  "type": "fs",
+  "settings": {
+    "location": "/mnt/elastic/backup",
+    "compress": true
+  }
+}
+
+GET  _snapshot/backup/_all
+
+POST _snapshot/backup/snapshot_528/_restore
+
+POST _reindex
+{
+  "source": {
+    "index": "zipkin:span-2020-05-28"
+  },
+  "dest": {
+    "index": "zipkin:span-2020-05-28-bak",
+    "op_type": "create"
+  }
+}
+
+POST _reindex
+{
+  "source": {
+    "index": "zipkin:span-2020-05-28"
+  },
+  "dest": {
+    "index": "zipkin:span-2020-05-28-bak2",
+    "op_type": "create"
+  }
+}
+
+POST _reindex
+{
+  "source": {
+    "index": ["zipkin:span-2020-05-28-bak","zipkin:span-2020-05-28-bak2"]
+  },
+  "dest": {
+    "index": "zipkin:span-2020-05-28",
+    "op_type": "create"
+  }
+}
+
+PUT zipkin:span*/_settings
+{
+  "number_of_replicas": 1
+}
+
+GET _cat/thread_pool/force_merge?v
+
+GET /_cat/indices/?s=segmentsCount:desc&v&h=index,segmentsCount,segmentsMemory,memoryTotal,mergesCurrent,mergesCurrentDocs,storeSize,p,r
+GET _tasks?detailed=true&actions=*forcemerge
+
+GET _cat/segments/zipkin:span-2019-11-16?v
+
+GET _cluster/health?pretty&level=indices
+
+GET /zipkin:span-2019-11-16/_stats?pretty
+
+GET _cluster/health
+GET _cluster/health?pretty&level=indices
+GET _cluster/health?pretty&level=shards
+
+GET _cat/indices?pretty
+GET _cat/zipkin:span-2019-11-16
+
+GET zipkin:span-2019-11-05
+
+GET _cluster/allocation/explain?pretty
+
+#POST _cluster/reroute
+PUT _snapshot/backup/
+
+GET _cluster/allocation/explain?pretty

@@ -1,0 +1,26 @@
+FROM alpine:latest
+MAINTAINER 最小Java运行镜像 <zhanggk@3clear.com>
+# jre
+ADD jre-8u221-linux-x64.tar.gz /usr/local
+
+# 设置apk国内镜像源
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+
+# 安装glibc && bash
+RUN apk add --no-cache bash && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-2.30-r0.apk && \
+    apk add --no-cache glibc-2.30-r0.apk && \
+    rm -rf glibc-2.30-r0.apk
+
+# 设置JAVA环境变量
+ENV JAVA_HOME=/usr/local/jre1.8.0_221
+ENV CLASSPATH=$JAVA_HOME/bin
+ENV PATH=.:$JAVA_HOME/bin:$PATH
+CMD ["java","-version"]
+
+# 设置容器时区
+ENV TZ=Asia/Shanghai
+RUN set -eux; \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime; \
+    echo $TZ > /etc/timezone

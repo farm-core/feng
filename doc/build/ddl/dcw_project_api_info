@@ -1,0 +1,27 @@
+-- 数据中心前台 项目接口信息表
+
+DROP TABLE IF EXISTS dcw_project_api_info;
+CREATE TABLE dcw_project_api_info
+(
+    id                      SERIAL PRIMARY KEY,
+    project_id              INT NOT NULL,
+    api_id                  INT NOT NULL,
+    paramters               text,
+    status                  INT,
+    created_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    created_by              VARCHAR(100) NOT NULL,
+    updated_by              VARCHAR(100) NOT NULL
+);
+CREATE UNIQUE INDEX ux_dcw_project_api_info
+    ON dcw_project_api_info (id);
+COMMENT ON TABLE dcw_project_api_info IS '项目接口信息表';
+COMMENT ON COLUMN dcw_project_api_info.id IS '主键id';
+COMMENT ON COLUMN dcw_project_api_info.project_id IS '项目ID';
+COMMENT ON COLUMN dcw_project_api_info.api_id IS '接口ID';
+COMMENT ON COLUMN dcw_project_api_info.paramters IS '参数JSON';
+COMMENT ON COLUMN dcw_project_api_info.status IS '接口状态';
+COMMENT ON COLUMN dcw_project_api_info.created_time IS '创建时间';
+COMMENT ON COLUMN dcw_project_api_info.updated_time IS '更新时间';
+COMMENT ON COLUMN dcw_project_api_info.created_by IS '创建人';
+COMMENT ON COLUMN dcw_project_api_info.updated_by IS '更新人';

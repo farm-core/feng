@@ -1,0 +1,31 @@
+-- 数据中心 项目审批日志表
+
+DROP TABLE IF EXISTS dcw_approve_log;
+CREATE TABLE dcw_approve_log
+(
+    id                      SERIAL PRIMARY KEY,
+    user_id                  INT,
+    username                VARCHAR(100) NOT NULL,
+    user_role                VARCHAR(100) NOT NULL,
+    project_id            INT,
+    result                 BOOLEAN,
+    comment                 TEXT,
+    created_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    created_by              VARCHAR(100) NOT NULL,
+    updated_by              VARCHAR(100) NOT NULL
+);
+CREATE UNIQUE INDEX ux_dcw_approve_log_id
+    ON dcw_approve_log (id);
+COMMENT ON TABLE dcw_approve_log IS '审批日志表';
+COMMENT ON COLUMN dcw_approve_log.id IS '日志id';
+COMMENT ON COLUMN dcw_approve_log.username IS '审批用户';
+COMMENT ON COLUMN dcw_approve_log.user_id IS '审批用户ID';
+COMMENT ON COLUMN dcw_approve_log.user_role IS '用户角色';
+COMMENT ON COLUMN dcw_approve_log.project_id IS '审批项目';
+COMMENT ON COLUMN dcw_approve_log.result IS '审批结果';
+COMMENT ON COLUMN dcw_approve_log.comment IS '审批意见';
+COMMENT ON COLUMN dcw_approve_log.created_time IS '创建时间';
+COMMENT ON COLUMN dcw_approve_log.updated_time IS '更新时间';
+COMMENT ON COLUMN dcw_approve_log.created_by IS '创建人';
+COMMENT ON COLUMN dcw_approve_log.updated_by IS '更新人';

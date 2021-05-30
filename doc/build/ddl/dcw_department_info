@@ -1,0 +1,25 @@
+-- 数据中心前台 部门信息表
+
+DROP TABLE IF EXISTS dcw_department_info;
+CREATE TABLE dcw_department_info
+(
+    id                      SERIAL PRIMARY KEY,
+    department_name              VARCHAR(100) NOT NULL,
+    description                  VARCHAR(500),
+    admin_user_id                  INT,
+    created_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    created_by              VARCHAR(100) NOT NULL,
+    updated_by              VARCHAR(100) NOT NULL
+);
+CREATE UNIQUE INDEX ux_dcw_department_info
+    ON dcw_department_info (id);
+COMMENT ON TABLE dcw_department_info IS '部门信息表';
+COMMENT ON COLUMN dcw_department_info.id IS '主键id';
+COMMENT ON COLUMN dcw_department_info.department_name IS '部门名称';
+COMMENT ON COLUMN dcw_department_info.description IS '部门描述';
+COMMENT ON COLUMN dcw_department_info.admin_user_id IS '管理员用户ID';
+COMMENT ON COLUMN dcw_department_info.created_time IS '创建时间';
+COMMENT ON COLUMN dcw_department_info.updated_time IS '更新时间';
+COMMENT ON COLUMN dcw_department_info.created_by IS '创建人';
+COMMENT ON COLUMN dcw_department_info.updated_by IS '更新人';

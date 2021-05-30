@@ -1,0 +1,40 @@
+-- 数据中心前台 项目信息表
+
+DROP TABLE IF EXISTS dcw_project_info;
+CREATE TABLE dcw_project_info
+(
+    id                      SERIAL PRIMARY KEY,
+    name                    VARCHAR(100) NOT NULL,
+    title                   VARCHAR(100) NOT NULL,
+    credentials             VARCHAR(200),
+    submitUser_id           INT,
+    local_ip                VARCHAR(100) NOT NULL,
+    department_id           INT,
+    description             VARCHAR(20),
+    enabled                 BOOLEAN,
+    status                  INT,
+    approved_time            TIMESTAMP,
+    submitted_time           TIMESTAMP,
+    created_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_time            TIMESTAMP    NOT NULL DEFAULT now(),
+    created_by              VARCHAR(100) NOT NULL,
+    updated_by              VARCHAR(100) NOT NULL
+);
+CREATE UNIQUE INDEX ux_dcw_project_info
+    ON dcw_project_info (id);
+COMMENT ON TABLE dcw_project_info IS '项目信息表';
+COMMENT ON COLUMN dcw_project_info.id IS '项目id';
+COMMENT ON COLUMN dcw_project_info.name IS '项目名';
+COMMENT ON COLUMN dcw_project_info.title IS '项目标题';
+COMMENT ON COLUMN dcw_project_info.credentials IS '项目凭据';
+COMMENT ON COLUMN dcw_project_info.local_ip IS '项目服务器IP或对外IP';
+COMMENT ON COLUMN dcw_project_info.department_id IS '项目所属部门ID';
+COMMENT ON COLUMN dcw_project_info.description IS '项目描述';
+COMMENT ON COLUMN dcw_project_info.enabled IS '是否有效';
+COMMENT ON COLUMN dcw_project_info.status IS '项目状态';
+COMMENT ON COLUMN dcw_project_info.approved_time IS '项目通过审批时间';
+COMMENT ON COLUMN dcw_project_info.submitted_time IS '项目提交审批时间';
+COMMENT ON COLUMN dcw_project_info.created_time IS '创建时间';
+COMMENT ON COLUMN dcw_project_info.updated_time IS '更新时间';
+COMMENT ON COLUMN dcw_project_info.created_by IS '创建人';
+COMMENT ON COLUMN dcw_project_info.updated_by IS '更新人';
