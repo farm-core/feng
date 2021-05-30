@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>middleware</artifactId>
+        <groupId>com.yun</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>xxl-job</artifactId>
+    <version>1.0.0</version>
+    <name>xxl-job</name>
+    <description>xxl-job分布式定时调度模块</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>xxl-job-admin</module>
+        <module>xxl-job-core</module>
+        <module>xxl-job-executor-samples</module>
+    </modules>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License version 3</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <tag>master</tag>
+        <url>https://github.com/xuxueli/xxl-job.git</url>
+        <connection>scm:git:https://github.com/xuxueli/xxl-job.git</connection>
+        <developerConnection>scm:git:git@github.com:xuxueli/xxl-job.git</developerConnection>
+    </scm>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+</project>
