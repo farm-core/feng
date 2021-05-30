@@ -1,0 +1,22 @@
+server:
+  port: ${SERVER_PORT:8761}
+spring:
+  application:
+    name: eureka
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}:@project.version@
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${EUREKA_NODE_1_HOST:localhost}:${EUREKA_NODE_1_PORT:8761}/eureka/,http://${EUREKA_NODE_2_HOST:localhost}:${EUREKA_NODE_2_PORT:8761}/eureka/
+logging:
+  level:
+    org:
+      springframework: info
+    com:
+      yun: debug
+  pattern:
+    console: "%d{HH:mm:ss} [%-5level] %-36.36logger{36} [%thread] - %msg%n"
+  config: classpath:logback-spring.xml

@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      metrics:
+        enabled: false
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # =====================================
+        - id: admin-up
+          uri: lb://admin
+          predicates:
+            - Path=/admin/**
+# gateway routes 配置中predicates 过滤路径 与 uri 路径一致时  即使stripPrefix设置为0依然会截取过滤路径
+#网关白名单
+gate:
+  ignore:
+    authentication:
+      startWith: /management,/monitor

@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT:13102}
+spring:
+  application:
+    name: monitor
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+# 注册中心
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_NODE_1_HOST:localhost}:${EUREKA_NODE_3_PORT:8761}/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    rabbit:
+      enabled: false
+#日志
+logging:
+  level:
+    org:
+      springframework: info
+    com:
+      yun: debug
+  pattern:
+    console: "%d{HH:mm:ss} [%-5level] %-36.36logger{36} [%thread] - %msg%n"
+    config: classpath:logback-spring.xml

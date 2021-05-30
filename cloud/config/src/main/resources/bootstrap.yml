@@ -1,0 +1,46 @@
+server:
+  port: ${SERVER_PORT:13101}
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_URL:https://github.com/feng-yun77/yi-yun-config.git}
+          username: ${GIT_USER:feng-yun77}
+          password: ${GIT_PASSWD:xufeng0802}
+          search-paths: ${DEFAULT_PATH:common/}
+          default-label: ${CONFIG_LABEL:main}
+  # rabbitmq
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:admin}
+    password: ${RABBIT_PASSWD:admin}
+# 注册中心
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:@project.version@
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_NODE_1_HOST:localhost}:${EUREKA_NODE_1_PORT:8761}/eureka/
+logging:
+  level:
+    org:
+      springframework: info
+    com:
+      yun: debug
+  pattern:
+    console: "%d{HH:mm:ss} [%-5level] %-36.36logger{36} [%thread] - %msg%n"
+  config: classpath:logback-spring.xml
+#actuor
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
