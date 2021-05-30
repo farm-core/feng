@@ -1,0 +1,54 @@
+server:
+  port: 8500
+spring:
+  profiles:
+    active: dev
+  application:
+    name: tx-lcn-server
+eureka:
+  client:
+    #表示向注册中心注册自己 默认为true
+    register-with-eureka: true
+    #是否从EurekaServer抓取已有的注册信息，默认为true,单节点无所谓,集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      # 入驻地址
+      defaultZone: http://${EUREKA_NODE_1_HOST:localhost}:${EUREKA_NODE_1_PORT:8761}/eureka/
+      #集群版
+      #defaultZone: http://eureka-gz01.com:1001/eureka/,http://eureka-gz02.com:1002/eureka/,http://eureka-gz03.com:1003/eureka/
+#默认密码  codingapi   改成  gaozhao
+tx-lcn:
+  manager:
+    #dtx-time: 60000
+    admin-key: 123456
+    host: 127.0.0.1
+    port: 8070
+  ribbon:
+    loadbalancer:
+      dtx:
+        enabled: true
+  message:
+    netty:
+      reconnect-count: 100
+      reconnect-delay: 6000
+  logger:
+    enabled: true
+    driver-class-name: com.mysql.jdbc.Driver
+    #jdbc-url: jdbc:mysql://10.1.1.239:3306/tx_manager?characterEncoding=UTF-8
+    jdbc-url: jdbc:mysql://127.0.0.1:3306/yi-yun?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+logging:
+  level:
+    com:
+      codingapi:
+        txlcn: DEBUG
+#actuor
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
