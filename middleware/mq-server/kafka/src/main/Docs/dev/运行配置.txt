@@ -1,0 +1,8 @@
+windows单机版：
+1.首先根据自己放置的位置修改文件
+    在zokeeper目录下创建data和logs文件夹，然后进入config中对zoo.cfg修改dataDir和dataLogDir的路径。
+    在进入kafka目录下创建logs文件夹，然后进入config中对server.properties修改log.dirs路径
+2.启动zokeeper
+    进入bin目录下执行zkServer
+3.启动kafka
+    进入config目录执行..\bin\windows\kafka-server-start.bat server.properties
