@@ -1,0 +1,15 @@
+server:
+  port: ${SERVER_PORT:9999}
+spring:
+  application:
+    name: /test
+#日志
+logging:
+  level:
+    org:
+      springframework: info
+    com:
+      yun: error
+  pattern:
+    console: "%d{HH:mm:ss} [%-5level] %-36.36logger{36} [%thread] - %msg%n"
+    config: classpath:logback-spring.xml
