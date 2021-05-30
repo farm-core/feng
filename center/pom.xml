@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>yi-yun</artifactId>
+        <groupId>com.yun</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>center</artifactId>
+    <name>center</name>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <description>管理中心</description>
+
+    <modules>
+        <module>admin</module>
+        <module>auth-server</module>
+        <module>auth-client</module>
+    </modules>
+
+    <dependencies>
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
+        <!--内部模块-->
+        <dependency>
+            <groupId>com.yun</groupId>
+            <artifactId>model-db</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>

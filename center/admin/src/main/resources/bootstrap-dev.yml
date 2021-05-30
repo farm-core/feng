@@ -1,0 +1,11 @@
+mq-sync:
+  model: server
+  exchanges:
+    - name: yun01
+      listener: 10
+      queues:
+        - name: sender.queue.test
+          retry: 3
+          ttl: 10000
+          clazz: com.yun.admin.controller.impl.TestServiceImpl
+          routingKey: test
